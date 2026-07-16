@@ -13,12 +13,13 @@ another computer — the changes arrive.
 
 ## Download
 
-**[⬇ qGitSync-setup.exe — installer](https://github.com/kostq/qGitSync/releases/latest/download/qGitSync-setup.exe)** (recommended)
-— choose the install folder, Start menu and desktop shortcuts, optional
-autostart, clean uninstall. No admin rights required.
+Grab the latest version from the **[Releases page](https://github.com/kostq/qGitSync/releases/latest)**:
 
-**[⬇ qGitSync.exe — portable](https://github.com/kostq/qGitSync/releases/latest/download/qGitSync.exe)**
-— single file, runs from anywhere (USB stick friendly), no installation.
+- **`qGitSync-<version>-setup.exe`** (recommended) — installer: choose the
+  install folder, Start menu and desktop shortcuts, optional autostart, clean
+  uninstall. No admin rights required.
+- **`qGitSync-<version>-portable.exe`** — single file, runs from anywhere
+  (USB stick friendly), no installation.
 
 Both keep their settings in `%LOCALAPPDATA%\qGitSync`, so you can switch
 between them freely; uninstalling never touches your folders or settings.
