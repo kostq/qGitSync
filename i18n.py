@@ -64,6 +64,8 @@ _RU = {
     "Merge failed:\n{err}": "Не удалось объединить:\n{err}",
     "Saving local files before merging...":
         "Сохраняю локальные файлы перед объединением...",
+    "Recovering from an interrupted sync...":
+        "Восстанавливаюсь после прерванной синхронизации...",
 
     # ---- core: GitHub API
     "GitHub token is not set": "Токен GitHub не задан",
@@ -305,6 +307,8 @@ _ES = {
     "Merge failed:\n{err}": "No se pudo combinar:\n{err}",
     "Saving local files before merging...":
         "Guardando archivos locales antes de combinar...",
+    "Recovering from an interrupted sync...":
+        "Recuperándose de una sincronización interrumpida...",
 
     "GitHub token is not set": "El token de GitHub no está configurado",
     "GitHub rejected the token (401). Check the token.":

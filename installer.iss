@@ -3,7 +3,7 @@
 ; Expects the onedir PyInstaller build in build_installer\dist\qGitSync\
 
 #define AppName "qGitSync"
-#define AppVersion "1.0.0"
+#define AppVersion "1.0.1"
 #define AppPublisher "kostq"
 #define AppURL "https://github.com/kostq/qGitSync"
 #define AppExeName "qGitSync.exe"

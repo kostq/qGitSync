@@ -13,6 +13,7 @@ import shutil
 import socket
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 import uuid
@@ -299,6 +300,34 @@ class Repo:
                      f"{os.environ.get('USERNAME', 'user')}@{socket.gethostname()}"],
                     self.folder, use_token=False)
 
+    def recover_interrupted_state(self, log):
+        """Починить репозиторий после прерванной синхронизации: зависший
+        rebase/merge, устаревший index.lock. Файлы пользователя не трогаются."""
+        git_dir = os.path.join(self.folder, ".git")
+        if not os.path.isdir(git_dir):
+            return
+        recovered = False
+        for d in ("rebase-merge", "rebase-apply"):
+            path = os.path.join(git_dir, d)
+            if os.path.exists(path):
+                run_git(["rebase", "--abort"], self.folder, check=False, use_token=False)
+                if os.path.exists(path):  # git не смог — убираем каталог сами
+                    shutil.rmtree(path, ignore_errors=True)
+                recovered = True
+        if os.path.exists(os.path.join(git_dir, "MERGE_HEAD")):
+            run_git(["merge", "--abort"], self.folder, check=False, use_token=False)
+            recovered = True
+        lock = os.path.join(git_dir, "index.lock")
+        try:
+            # lock старше 5 минут — от убитого процесса, живой git так долго не держит
+            if os.path.exists(lock) and time.time() - os.path.getmtime(lock) > 300:
+                os.remove(lock)
+                recovered = True
+        except OSError:
+            pass
+        if recovered:
+            log(tr("Recovering from an interrupted sync..."))
+
     def _conflict_copy_name(self, path):
         """Имя для копии локальной версии: 'file (conflict HOST 2026-07-16 15-04).txt'."""
         base, ext = os.path.splitext(path)
@@ -403,6 +432,7 @@ class Repo:
 
         if self.is_repo():
             log(tr("Folder is already a git repository."))
+            self.recover_interrupted_state(log)
         elif remote_url and not os.listdir(folder):
             log(tr("Folder is empty — cloning repository..."))
             run_git(["clone", remote_url, folder], None)
@@ -441,6 +471,7 @@ class Repo:
     def sync(self, log):
         """add -> commit -> pull --rebase -> push. True if something was pushed."""
         folder = self.folder
+        self.recover_interrupted_state(log)
         branch = self.branch()
 
         run_git(["add", "-A"], folder, use_token=False)
