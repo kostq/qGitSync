@@ -13,8 +13,15 @@ another computer — the changes arrive.
 
 ## Download
 
-**[⬇ qGitSync.exe — latest release](https://github.com/kostq/qGitSync/releases/latest/download/qGitSync.exe)**
-(Windows, single file, no installation required)
+**[⬇ qGitSync-setup.exe — installer](https://github.com/kostq/qGitSync/releases/latest/download/qGitSync-setup.exe)** (recommended)
+— choose the install folder, Start menu and desktop shortcuts, optional
+autostart, clean uninstall. No admin rights required.
+
+**[⬇ qGitSync.exe — portable](https://github.com/kostq/qGitSync/releases/latest/download/qGitSync.exe)**
+— single file, runs from anywhere (USB stick friendly), no installation.
+
+Both keep their settings in `%LOCALAPPDATA%\qGitSync`, so you can switch
+between them freely; uninstalling never touches your folders or settings.
 
 ## Features
 
@@ -80,8 +87,13 @@ py -m pip install -r requirements.txt
 py app.py                # run
 
 py -m pip install pyinstaller
+
+# portable single file → dist\qGitSync.exe
 py -m PyInstaller --noconfirm --onefile --windowed --name qGitSync --icon icon.ico --add-data "icon.ico;." app.py
-# → dist\qGitSync.exe
+
+# installer (needs Inno Setup 6) → dist\qGitSync-setup.exe
+py -m PyInstaller --noconfirm --windowed --name qGitSync --icon icon.ico --add-data "icon.ico;." --distpath build_installer\dist --workpath build_installer\work app.py
+iscc installer.iss
 ```
 
 ## Project layout

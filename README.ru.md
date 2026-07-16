@@ -6,8 +6,15 @@
 
 ## Скачать
 
-**[⬇ qGitSync.exe — последний релиз](https://github.com/kostq/qGitSync/releases/latest/download/qGitSync.exe)**
-(Windows, один файл, установка не требуется)
+**[⬇ qGitSync-setup.exe — установщик](https://github.com/kostq/qGitSync/releases/latest/download/qGitSync-setup.exe)** (рекомендуется)
+— выбор папки установки, ярлыки в меню «Пуск» и на рабочем столе, автозапуск
+по желанию, корректное удаление. Права администратора не нужны.
+
+**[⬇ qGitSync.exe — портативный](https://github.com/kostq/qGitSync/releases/latest/download/qGitSync.exe)**
+— один файл, работает откуда угодно (хоть с флешки), без установки.
+
+Обе версии хранят настройки в `%LOCALAPPDATA%\qGitSync`, между ними можно
+свободно переключаться; удаление программы не трогает ваши папки и настройки.
 
 qGitSync следит за вашими папками и синхронизирует их с репозиториями GitHub.
 Изменили файл — он автоматически закоммитится и отправится; открыли программу
@@ -80,8 +87,13 @@ py -m pip install -r requirements.txt
 py app.py                # запуск
 
 py -m pip install pyinstaller
+
+# портативный один файл → dist\qGitSync.exe
 py -m PyInstaller --noconfirm --onefile --windowed --name qGitSync --icon icon.ico --add-data "icon.ico;." app.py
-# → dist\qGitSync.exe
+
+# установщик (нужен Inno Setup 6) → dist\qGitSync-setup.exe
+py -m PyInstaller --noconfirm --windowed --name qGitSync --icon icon.ico --add-data "icon.ico;." --distpath build_installer\dist --workpath build_installer\work app.py
+iscc installer.iss
 ```
 
 ## Лицензия
